@@ -1,2 +1,8 @@
 # GATE-STAAR-RAP
-UKB RAP app: A robust, powerful, and computationally efficient framework for rare variant association testing of censored time-to-event phenotypes in large scale biobank studies.
+
+This is the source code for the GATE-STAAR app that runs on the DNAnexus Platform. For more information about how to run or modify it, see https://documentation.dnanexus.com.
+
+See also [GATE-STAAR](https://github.com/shuangsong0110/GATE-STAAR)
+
+
+
