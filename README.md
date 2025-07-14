@@ -4,5 +4,9 @@ This is the source code for the GATE-STAAR app that runs on the DNAnexus Platfor
 
 See also [GATE-STAAR](https://github.com/shuangsong0110/GATE-STAAR)
 
+**Input:**
+
+1. path to the agds file
+2. 
 
 
