@@ -206,6 +206,7 @@ if(T){
     #                  plof_ds
     ################################################
     #t2 <- proc.time()
+    print('plof+DS')
     variant.id.gene <- seqGetData(genofile, "variant.id")
     lof.in.plof <- (GENCODE.EXONIC.Category=="stopgain")|(GENCODE.EXONIC.Category=="stoploss")|(GENCODE.Category=="splicing")|(GENCODE.Category=="exonic;splicing")|(GENCODE.Category=="ncRNA_splicing")|(GENCODE.Category=="ncRNA_exonic;splicing")|((GENCODE.EXONIC.Category=="nonsynonymous SNV")&(MetaSVM_pred=="D"))
     variant.id.gene.category <- variant.id.gene[lof.in.plof]
@@ -316,6 +317,8 @@ if(T){
     #####################################################
     #                      plof
     #####################################################
+    print('plof')
+    
     lof.in.plof <- (GENCODE.EXONIC.Category=="stopgain")|(GENCODE.EXONIC.Category=="stoploss")|(GENCODE.Category=="splicing")|(GENCODE.Category=="exonic;splicing")|(GENCODE.Category=="ncRNA_splicing")|(GENCODE.Category=="ncRNA_exonic;splicing")
     variant.id.gene.category <- variant.id.gene[lof.in.plof]
     
@@ -418,6 +421,8 @@ if(T){
     #############################################
     #             synonymous
     #############################################
+    print('synonymous')
+    
     lof.in.synonymous <- (GENCODE.EXONIC.Category=="synonymous SNV")
     variant.id.gene.category <- variant.id.gene[lof.in.synonymous]
     
@@ -520,6 +525,8 @@ if(T){
     #################################################
     #        missense
     #################################################
+    print('missense')
+    
     lof.in.missense <- (GENCODE.EXONIC.Category=="nonsynonymous SNV")
     variant.id.gene.category <- variant.id.gene[lof.in.missense]
     
@@ -606,6 +613,8 @@ if(T){
     #################################################
     #         disruptive missense
     #################################################
+    print('disruptive missense')
+    
     lof.in.dmissense <- (GENCODE.EXONIC.Category=="nonsynonymous SNV")&(MetaSVM_pred=="D")
     variant.id.gene.category <- variant.id.gene[lof.in.dmissense]
     
@@ -1315,7 +1324,7 @@ if(T){
             score_skat0_unweight=score_skat0_unweight,cs=cs,
             #y=c(obj_nullmodel$y), g=G, 
             #R_pois=abs(R00),
-            kk=kk, theta=theta, mu0=mu0, varRatio=varRatio, useLD=T, R_pois=abs(R00))$pv)
+            kk=kk, theta=theta, mu0=mu0, varRatio=varRatio, useLD=T, R_pois=abs(R00))$pv, silent=T)
           if(inherits(aa, "try-error")){
             
             tmp <- pv_skat_ld4(#mu=c(obj_nullmodel$mu), 
@@ -1342,7 +1351,7 @@ if(T){
               score_skat0_unweight=score_skat0_unweight,cs=cs,
               #y=c(obj_nullmodel$y), g=G, 
               #R_pois=abs(R00),
-              kk=kk2, theta=theta2, mu0=mu0, varRatio=varRatio, useLD=T, R_pois=abs(R00))$pv)
+              kk=kk2, theta=theta2, mu0=mu0, varRatio=varRatio, useLD=T, R_pois=abs(R00))$pv, silent=T)
             if(inherits(aa, "try-error")){
               
               tmp <- pv_skat_ld4(#mu=c(obj_nullmodel$mu), 
@@ -1368,7 +1377,7 @@ if(T){
               score_skat0_unweight=score_skat0_unweight,cs=cs,
               #y=c(obj_nullmodel$y), g=G, 
               #R_pois=abs(R00),
-              kk=kk3, theta=theta3, mu0=mu0, varRatio=varRatio, useLD=T, R_pois=abs(R00))$pv)
+              kk=kk3, theta=theta3, mu0=mu0, varRatio=varRatio, useLD=T, R_pois=abs(R00))$pv, silent=T)
             if(inherits(aa, "try-error")){
               
               tmp <- pv_skat_ld4(#mu=c(obj_nullmodel$mu), 
@@ -1655,7 +1664,7 @@ if(T){
       #cs <- sqrt(colSums(R_pois))
       ii <- which(cs>1.01)
       if(length(ii)>1 & useLD){
-        tmp <-   gamma_weighted_decomp(kk[ii], theta[ii], weights[ii], R_pois[ii,ii])
+        quiet(tmp <-   gamma_weighted_decomp(kk[ii], theta[ii], weights[ii], R_pois[ii,ii]))
         weights_new <- c(weights[-ii], rep(1,length(tmp$alpha_new)))
         kk_new <- c(kk[-ii], tmp$alpha_new)
         theta_new <- c(theta[-ii], tmp$beta_new)
@@ -3011,6 +3020,7 @@ if(T){
       }
     }
     
+    print('downstream')
     
     ## Annotation
     Anno.Int.PHRED.sub <- NULL
@@ -3125,7 +3135,7 @@ if(T){
     
     
     #if(length(id_all[[2]])>=rv_num_cutoff_min_prefilter & length(id_all[[2]])<rv_num_cutoff_max_prefilter){
-    
+    print('upstream')
     is.in <- (GENCODE.Category=="upstream")&(SNVlist)
     variant.id.upstream <- variant.id[is.in]
     
@@ -3291,6 +3301,8 @@ if(T){
     
     ########################################################
     #                UTR
+    print('UTR')
+    
     is.in <- ((GENCODE.Category=="UTR3")|(GENCODE.Category=="UTR5")|(GENCODE.Category=="UTR5;UTR3"))&(SNVlist)
     variant.id.UTR <- variant.id[is.in]
     
@@ -3455,6 +3467,7 @@ if(T){
     
     #############################################
     #   Promoter-CAGE
+    print('Promoter-CAGE')
     
     ## Promoter
     varid <- seqGetData(genofile, "variant.id")
@@ -3643,6 +3656,7 @@ if(T){
     
     ##################################################
     #       Promoter-DHS
+    print('Promoter-DHS')
     
     # Subsetting Promoters that within +/-3kb of TSS and have rOCRs signals
     
@@ -3828,6 +3842,7 @@ if(T){
     
     ###########################################
     #        Enhancer-CAGE
+    print('Enhancer-CAGE')
     
     #Now extract the GeneHancer with CAGE Signal Overlay
     genehancerAnno <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="GeneHancer")]))
@@ -4016,6 +4031,7 @@ if(T){
     
     ##################################################
     #       Enhancer-DHS
+    print('Enhancer-DHS')
     
     rOCRsAnno <- seqGetData(genofile, paste0(Annotation_dir,Annotation_name_catalog$dir[which(Annotation_name_catalog$name=="DHS")]))
     rOCRs <- rOCRsAnno!=""
@@ -4394,7 +4410,7 @@ if(region=='noncoding'){
       # }
       #start_time <- proc.time()
       results <- Gene_Centric_Noncoding_survival(chr=chr,gene_name=gene_name,genofile=genofile,obj_nullmodel=obj_nullmodel,
-                                                     rare_maf_cutoff=0.01,rv_num_cutoff=2,rv_num_cutoff_max_prefilter=2000,
+                                                     rare_maf_cutoff=0.01,rv_num_cutoff=2,rv_num_cutoff_max_prefilter=2500,
                                                      QC_label=QC_label,variant_type=variant_type,geno_missing_imputation=geno_missing_imputation,
                                                      Annotation_dir=Annotation_dir,Annotation_name_catalog=Annotation_name_catalog,
                                                      Use_annotation_weights=Use_annotation_weights,Annotation_name=Annotation_name,varRatio=varRatio)
